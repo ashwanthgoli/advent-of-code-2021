@@ -21,13 +21,27 @@ var testInput = strings.TrimSpace(`
 func BenchmarkDiveV1(b *testing.B) {
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		DiveV1(testInput)
+		divep1v1(testInput)
 	}
 }
 
 func BenchmarkDiveV2(b *testing.B) {
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		DiveV2(testInput)
+		divep1v2(testInput)
+	}
+}
+
+func BenchmarkDiveBV1(b *testing.B) {
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		divep2v1(testInput)
+	}
+}
+
+func BenchmarkDiveBV2(b *testing.B) {
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		divep2v2(testInput)
 	}
 }

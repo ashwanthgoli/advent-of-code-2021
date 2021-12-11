@@ -1,0 +1,11 @@
+goos: darwin
+goarch: amd64
+pkg: github.com/ashwanthgoli/advent-of-code-2021/day1
+cpu: Intel(R) Core(TM) i7-9750H CPU @ 2.60GHz
+BenchmarkDiveV2 	 5364163	       220.6 ns/op
+BenchmarkDiveV2 	 5514589	       253.2 ns/op
+BenchmarkDiveV2 	 5337871	       219.0 ns/op
+BenchmarkDiveV2 	 5554941	       223.8 ns/op
+BenchmarkDiveV2 	 5417859	       219.1 ns/op
+PASS
+ok  	github.com/ashwanthgoli/advent-of-code-2021/day1	7.505s

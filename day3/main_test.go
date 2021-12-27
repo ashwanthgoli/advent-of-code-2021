@@ -2,9 +2,21 @@ package main
 
 import "testing"
 
-func BenchmarkDecodeP1(b *testing.B) {
+func BenchmarkDecodePC(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		decode(testInput)
+		decodePC(testInput)
+	}
+}
+
+func BenchmarkDecodeLSR(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		decodeLSR_V1(testInput)
+	}
+}
+
+func BenchmarkDecodeLSR_V2(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		decodeLSR_V2(testInput)
 	}
 }
 

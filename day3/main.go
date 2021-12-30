@@ -155,15 +155,15 @@ func parseReport(n, blen int, input string, mc bool) int64 {
 			}
 		}
 
-		var filter byte = '1'
+		var filter byte
 		if mc {
 			filter = '1'
-			if zeroes > ones {
+			if ones < (len(filtered)+1)/2 {
 				filter = '0'
 			}
 		} else {
 			filter = '0'
-			if ones < zeroes {
+			if ones < (len(filtered)+1)/2 {
 				filter = '1'
 			}
 		}

@@ -184,13 +184,7 @@ func getBoards(input string) ([]bingoBoard, error) {
 	return boards, nil
 }
 
-func main() {
-	boards, err := getBoards(input)
-	if err != nil {
-		fmt.Printf("Failed to read boards input. error %s", err.Error())
-		os.Exit(1)
-	}
-
+func BingoP1(boards []bingoBoard) (int, error) {
 	var e error
 	drawFn := drawNumberGen(input)
 	for {
@@ -203,8 +197,7 @@ func main() {
 			if _, ok := e.(noValuesError); ok {
 				break
 			} else {
-				fmt.Printf("Failed to draw the next number. error: %s", e.Error())
-				os.Exit(1)
+				return 0, fmt.Errorf("Failed to draw the next number. error: %s", e.Error())
 			}
 		}
 
@@ -221,8 +214,77 @@ func main() {
 		}
 
 		if result > 0 {
-			fmt.Printf("Result: %d\n", result)
-			os.Exit(0)
+			return result, nil
 		}
 	}
+
+	return 0, fmt.Errorf("No board won")
+}
+
+func BingoP2(boards []bingoBoard) (int, error) {
+	var (
+		result int
+		e      error
+	)
+
+	skip := make(map[int]struct{})
+	drawFn := drawNumberGen(input)
+	for {
+		var (
+			v int
+		)
+		v, e = drawFn()
+		if e != nil {
+			if _, ok := e.(noValuesError); ok {
+				break
+			} else {
+				return 0, fmt.Errorf("Failed to draw the next number. error: %s", e.Error())
+			}
+		}
+
+		for i := range boards {
+			if _, ok := skip[i]; ok {
+				continue
+			}
+
+			boards[i].crossNumber(v)
+
+			if boards[i].isComplete() {
+				sum := boards[i].sumUnmarked()
+				skip[i] = struct{}{}
+				result = sum * v
+
+				if len(skip) == len(boards) {
+					break
+				}
+			}
+		}
+	}
+
+	return result, nil
+}
+
+func main() {
+	boards, err := getBoards(input)
+	if err != nil {
+		fmt.Printf("Failed to read boards input. error %s", err.Error())
+		os.Exit(1)
+	}
+
+	boards2 := boards
+	res, err := BingoP1(boards)
+	if err != nil {
+		fmt.Println(err.Error())
+		os.Exit(1)
+	}
+
+	fmt.Printf("Result: %d\n", res)
+
+	res, err = BingoP2(boards2)
+	if err != nil {
+		fmt.Println(err.Error())
+		os.Exit(1)
+	}
+
+	fmt.Printf("Result: %d\n", res)
 }
